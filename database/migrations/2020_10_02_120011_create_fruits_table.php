@@ -16,7 +16,7 @@ class CreateFruitsTable extends Migration
         Schema::create('fruits', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->enum('size', ['small', 'medium', 'large']); // TODO: avoid using enums in SQL
+            $table->string('size');
             $table->string('colour')->nullable();
             $table->timestamps();
         });

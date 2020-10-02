@@ -29,7 +29,18 @@ class FruitController extends Controller
 
         $fruit = new Fruit;
         $fruit->name = $request->get('name');
-        $fruit->size = $request->get('size');
+
+        $size = $request->get('size');
+        if ($size) {
+            $possible_sizes = array_values(Fruit::SIZES);
+            if (in_array($size, $possible_sizes)) {
+                $fruit->size = $size;
+            } else {
+                $response = ['message' => 'Invalid fruit size.'];
+                return response($response, 401);
+            }
+        }
+
         $fruit->colour = $request->get('colour');
         $fruit->save();
 
