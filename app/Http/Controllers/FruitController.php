@@ -12,16 +12,10 @@ class FruitController extends Controller
      */
     public function index()
     {
-        return 'Hello';
+        $response = ['message' => 'index function'];
+        return response($response, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('fruits-create');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -49,15 +43,8 @@ class FruitController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        //
+        $response = ['message' => 'show function'];
+        return response($response, 200);
     }
 
     /**
@@ -65,7 +52,8 @@ class FruitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = ['message' => 'update function'];
+        return response($response, 200);
     }
 
     /**
@@ -73,6 +61,7 @@ class FruitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = ['message' => 'destroy function'];
+        return response($response, 200);
     }
 }
