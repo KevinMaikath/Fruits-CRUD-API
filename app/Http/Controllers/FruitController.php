@@ -29,22 +29,19 @@ class FruitController extends Controller
 
         $fruit = new Fruit;
         $fruit->name = $request->get('name');
+        $fruit->colour = $request->get('colour');
 
         $size = $request->get('size');
-        if ($size) {
-            $possible_sizes = array_values(Fruit::SIZES);
-            if (in_array($size, $possible_sizes)) {
-                $fruit->size = $size;
-            } else {
-                $response = ['message' => 'Invalid fruit size.'];
-                return response($response, 401);
-            }
+        $possible_sizes = array_values(Fruit::SIZES);
+        if (in_array($size, $possible_sizes)) {
+            $fruit->size = $size;
+        } else {
+            $response = ['message' => 'Invalid fruit size.'];
+            return response($response, 400);
         }
 
-        $fruit->colour = $request->get('colour');
         $fruit->save();
-
-        return response($fruit, 200);
+        return response($fruit, 201);
     }
 
     /**
@@ -72,17 +69,7 @@ class FruitController extends Controller
             return response($response, 400);
         }
 
-        if ($request->get('name')) {
-            $fruit->name = $request->get('name');
-        }
-        if ($request->get('size')) {
-            $fruit->size = $request->get('size');
-        }
-        if ($request->get('colour')) {
-            $fruit->colour = $request->get('colour');
-        }
-        $fruit->save();
-
+        $fruit->update($request->toArray());
         return response($fruit, 200);
     }
 
