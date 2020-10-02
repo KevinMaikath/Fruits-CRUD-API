@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 class FruitController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Return a list with all the fruits.
      */
     public function index()
     {
-        $response = ['message' => 'index function'];
-        return response($response, 200);
+        $fruits = Fruit::all();
+        return response($fruits, 200);
     }
 
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new fruit in the database.
      */
     public function store(Request $request)
     {
@@ -27,41 +27,67 @@ class FruitController extends Controller
             'size' => 'required'
         ]);
 
-        $params = $request->all();
-
         $fruit = new Fruit;
-        $fruit->name = $params['name'];
-        $fruit->size = $params['size'];
-        $fruit->colour = $params['colour'];
+        $fruit->name = $request->get('name');
+        $fruit->size = $request->get('size');
+        $fruit->colour = $request->get('colour');
         $fruit->save();
 
-        return $fruit;
+        return response($fruit, 200);
     }
 
     /**
-     * Display the specified resource.
+     * Display a fruit given it's id;
      */
     public function show($id)
     {
-        $response = ['message' => 'show function'];
-        return response($response, 200);
+        $fruit = Fruit::all()->where('id', '=', $id)->first();
+        if ($fruit) {
+            return response($fruit, 200);
+        } else {
+            $response = ['message' => 'Fruit with id: ' . $id . ' could not be found.'];
+            return response($response, 400);
+        }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a fruit given it's id.
      */
     public function update(Request $request, $id)
     {
-        $response = ['message' => 'update function'];
-        return response($response, 200);
+        $fruit = Fruit::all()->where('id', '=', $id)->first();
+        if (!$fruit) {
+            $response = ['message' => 'Fruit with id: ' . $id . ' could not be found.'];
+            return response($response, 400);
+        }
+
+        if ($request->get('name')) {
+            $fruit->name = $request->get('name');
+        }
+        if ($request->get('size')) {
+            $fruit->size = $request->get('size');
+        }
+        if ($request->get('colour')) {
+            $fruit->colour = $request->get('colour');
+        }
+        $fruit->save();
+
+        return response($fruit, 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a fruit given it's id.
      */
     public function destroy($id)
     {
-        $response = ['message' => 'destroy function'];
-        return response($response, 200);
+        $fruit = Fruit::all()->where('id', '=', $id)->first();
+        if ($fruit) {
+            $fruit->delete();
+            $response = ['message' => 'Fruit with id: ' . $id . ' has been succesfully deleted.'];
+            return response($response, 200);
+        } else {
+            $response = ['message' => 'Fruit with id: ' . $id . ' could not be found.'];
+            return response($response, 400);
+        }
     }
 }
