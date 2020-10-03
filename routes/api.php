@@ -21,5 +21,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
+    Route::get('/protectedTest', 'Auth\ApiAuthController@protectedTest');
     Route::resource('/fruits', 'FruitController');
 });

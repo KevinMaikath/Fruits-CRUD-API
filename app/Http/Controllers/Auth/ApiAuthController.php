@@ -33,7 +33,7 @@ class ApiAuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
             return response(['errors' => $validator->errors()->all()], 422);
@@ -59,6 +59,18 @@ class ApiAuthController extends Controller
         $token = $request->user()->token();
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
+        return response($response, 200);
+    }
+
+    /**
+     * Dummy route to check if a token is valid.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function protectedTest(Request $request)
+    {
+        $response = ['message' => 'OK'];
         return response($response, 200);
     }
 }
