@@ -10,7 +10,7 @@ This project uses Laravel 7.2.29 with a MySQL database to work as a RESTful API 
 # Set Up
 In order to properly make use of this API, follow the these steps:
 - Make sure you have installed Laravel **version 7.2.19** and PHP Composer.
-- Properly set up the database connection: 
+- Properly set up the database connection (inside .env file): 
 ```dotenv
 DB_CONNECTION=your_db_type (example: mysql)
 DB_HOST=your_db_IP
