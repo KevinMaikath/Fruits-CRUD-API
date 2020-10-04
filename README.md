@@ -19,6 +19,10 @@ DB_DATABASE=your_db_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
+- Install Composer dependencies:
+```
+composer install
+```
 - Run database migrations:
 ```
 php artisan migrate
